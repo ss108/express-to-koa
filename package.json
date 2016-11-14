@@ -1,0 +1,26 @@
+{
+  "name": "express-to-koa",
+  "version": "1.0.0",
+  "description": "Example to help provide some guidance on migrating from Express to Koa",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ss108/express-to-koa.git"
+  },
+  "keywords": [
+    "express",
+    "koa"
+  ],
+  "author": "ss108",
+  "license": "GNU GPLv3",
+  "bugs": {
+    "url": "https://github.com/ss108/express-to-koa/issues"
+  },
+  "homepage": "https://github.com/ss108/express-to-koa#readme",
+  "dependencies": {
+    "express": "4.14.0",
+    "koa": "2.0.0-alpha.7"
+  }
+}
