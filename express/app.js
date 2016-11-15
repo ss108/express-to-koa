@@ -20,5 +20,12 @@ app.post('/users', function (req, res) {
     });
 });
 
+app.get('/users', function (req, res) {
+    logic.getAll(function (err, users) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(users));
+    });
+});
+
 app.listen(3000);
 console.log("running on port 3000");

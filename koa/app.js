@@ -14,15 +14,16 @@ const convertedMiddleware = c2k(expressMiddleware);
 
 app.use(convertedMiddleware);
 
-const router = new Router()
+const router = new Router();
 
 router.post('/users', async (ctx) => {
-    await logic.create(ctx.request.fields);
-    ctx.body = "thumb up";
+    let item = await logic.create(ctx.request.fields);
+    ctx.body = `item id: ${item._id}`; 
 });
 
 app.use(router.routes()).use(router.allowedMethods());
 
+//default, index
 app.use(async (ctx) => {
     console.log(ctx.req.isAdmin);
     ctx.body = "Hello World";
