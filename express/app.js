@@ -1,15 +1,22 @@
-var express = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
+
 var logic = require('./logic');
+var expressMiddleware = require('../common/middleware');
 
 var app = express();
 
+app.use(bodyParser.json());
+app.use(expressMiddleware);
+
 app.get('/', function (req, res) {
+    console.log(req.isAdmin);
     res.send('Hello World');
 });
 
 app.post('/users', function (req, res) {
-    logic.create(req.body, function () {
-        res.send('thumb up');
+    logic.create(req.body, function (err, item) {
+        res.send(`item id: ${item._id}`);
     });
 });
 
