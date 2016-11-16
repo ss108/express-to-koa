@@ -10,20 +10,51 @@ app.use(bodyParser.json());
 app.use(expressMiddleware);
 
 app.get('/', function (req, res) {
-    console.log(req.isAdmin);
     res.send('Hello World');
 });
 
-app.post('/users', function (req, res) {
+app.post('/messages', function (req, res) {
     logic.create(req.body, function (err, item) {
+        if (err) {
+            return next(err);
+        }
+
         res.send(`item id: ${item._id}`);
     });
 });
 
-app.get('/users', function (req, res) {
-    logic.getAll(function (err, users) {
+app.get('/messages/:id', function (req, res, next) {
+    logic.get(req.params.id, function (err, item) {
+        if (err) {
+            return next(err);
+        }
+
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(users));
+        res.send(JSON.stringify(item));
+    });
+});
+
+//marks a message as read
+app.put('/messages/:id', function (req, res) {
+    logic.markAsRead(req.params.id, function (err) {
+        if (err) {
+            return next(err);
+        }
+    });
+});
+
+app.get('/messages', function (req, res) {
+    if (!req.isAdmin) {
+        return next(new Error("Unauthorized"));
+    }
+
+    logic.getAll(function (err, messages) {
+        if (err) {
+            return next(err);
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(messages));
     });
 });
 

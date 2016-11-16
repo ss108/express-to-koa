@@ -14,18 +14,48 @@ const convertedMiddleware = c2k(expressMiddleware);
 
 app.use(convertedMiddleware);
 
+app.use(async (ctx, next) => {
+    try {
+        await next();
+    }
+
+    catch (err) {
+        ctx.status = 500;
+        ctx.message = err.message || "Sorry, an error has occurred.";
+    }
+});
+
 const router = new Router();
 
-router.post('/users', async (ctx) => {
+router.post('/messages', async (ctx) => {
     let item = await logic.create(ctx.request.fields);
-    ctx.body = `item id: ${item._id}`; 
+    ctx.body = `item id: ${item._id}`;
+});
+
+router.get('/messages/:id', async (ctx) => {
+    let item = await logic.get(ctx.params.id);
+    ctx.body = item;
+});
+
+router.get('/messages', async (ctx) => {
+    if (!ctx.req.isAdmin) {
+        throw Error("Unauthorized");
+    }
+
+    let messages = await logic.getAll();
+    ctx.body = messages;
+});
+
+router.put('/messages/:id', async (ctx) => {
+    let res = await logic.markAsRead(ctx.params.id);
+    ctx.status = 204;
+    ctx.body = "";
 });
 
 app.use(router.routes()).use(router.allowedMethods());
 
 //default, index
 app.use(async (ctx) => {
-    console.log(ctx.req.isAdmin);
     ctx.body = "Hello World";
 });
 

@@ -3,11 +3,16 @@ const db = new Datastore();
 
 module.exports = {
     create: function (payload, cb) {
+        payload.read = false;
         db.insert(payload, cb);
     },
 
     delete: function (id, cb) {
         db.remove({ _id: id }, {}, cb);
+    },
+
+    get: function (id, cb) {
+        db.findOne({ _id: id }, cb);
     },
 
     getAll: function (cb) {
@@ -24,6 +29,10 @@ module.exports = {
                 cb(null, users);
             }
         });
+    },
+
+    markAsRead: function (id, cb) {
+        db.update({ _id: id }, { $set: { read: true } }, {}, cb);
     }
 
 };
