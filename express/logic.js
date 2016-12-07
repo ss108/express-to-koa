@@ -1,7 +1,7 @@
-const Datastore = require('nedb');
+import Datastore from "nedb";
 const db = new Datastore();
 
-module.exports = {
+const logic = {
     create: function (payload, cb) {
         payload.read = false;
         db.insert(payload, cb);
@@ -36,3 +36,5 @@ module.exports = {
     }
 
 };
+
+export default logic;

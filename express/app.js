@@ -1,9 +1,8 @@
-// const express = require('express');
 import express from "express";
-const bodyParser = require('body-parser');
+import bodyParser from "body-parser";
 
-const logic = require('./logic');
-const expressMiddleware = require('../common/middleware');
+import logic from "./logic";
+import expressMiddleware from "../common/middleware";
 
 const app = express();
 
