@@ -1,10 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from "express";
+import bodyParser from "body-parser";
 
-var logic = require('./logic');
-var expressMiddleware = require('../common/middleware');
+import logic from "./logic";
+import expressMiddleware from "../common/middleware";
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.json());
 app.use(expressMiddleware);

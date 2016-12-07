@@ -6,7 +6,7 @@ import c2k from "koa-connect";
 import logic from "./logic";
 import expressMiddleware from "../common/middleware";
 
-var app = new Koa();
+const app = new Koa();
 
 app.use(bodyParser());
 
@@ -55,7 +55,7 @@ router.put('/messages/:id', async (ctx) => {
 app.use(router.routes()).use(router.allowedMethods());
 
 //default, index
-app.use(async (ctx) => {
+app.use((ctx) => {
     ctx.body = "Hello World";
 });
 
